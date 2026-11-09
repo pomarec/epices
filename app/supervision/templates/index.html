@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <script>
+      function onDateSelected(event) {
+        let date = event.target.value
+        let params = new URLSearchParams(window.location.search);
+        params.set('date', date);
+        window.location.search = params;
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <div style="display: flex; justify-content: space-between">
+        <span>Menu</span>
+        <span>Consulter les mesures du : <input class="date-picker" type="date" value="{{ date|date:"Y-m-d" }}" onchange="onDateSelected(event);"/></span>
+        <button class="measures-upload">Envoyer des mesures</button>
+      </div>
+      <hr/>
+    </header>
+    {% if measures %}
+      Voici les mesures du {{ measures.0.datetime | date }}.<br>
+      Un total de {{ energy_sum }} Wh a été produit.
+      <ul>
+        {% for measure in measures %}
+          <li>{{measure.datetime | time }} : {{ measure.energy }} Wh</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      Il n'y a pas encore de donnée pour ce jour-ci.</br>
+      <button class="measures-upload">Envoyer des mesures</button>
+    {% endif %}
+  </body>
+</html>

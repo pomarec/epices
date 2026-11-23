@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from django import forms
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 from app.supervision.serialiazers import MeasureSerializer
@@ -23,11 +23,10 @@ def index(request):
     )
     context["date"] = date
 
-    if date_param:
-        measures = Measure.objects.filter(datetime__date=date.date())
-        context["measures"] = measures
-        energy_sum = sum(m.energy for m in measures)
-        context["energy_sum"] = energy_sum
+    measures = Measure.objects.filter(datetime__date=date)
+    context["measures"] = measures
+    energy_sum = sum(m.energy for m in measures)
+    context["energy_sum"] = energy_sum
 
     return render(request, "index.html", context)
 

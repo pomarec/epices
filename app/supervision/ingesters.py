@@ -11,10 +11,11 @@ class MeasureIngester:
         """
         for m in measures:
             self.check(m)
-        self.merge(measures)
-        for m in measures:
+        merged_measures = self.merge(measures)
+        for m in merged_measures:
             m.inverter.save()
             m.save()
+        return merged_measures
 
     def check(self, measure):
         """
@@ -37,4 +38,4 @@ class MeasureIngester:
         Their energy value will be added. The resulting measure will have
         its datetime set at the beginning of the hour.
         """
-        pass
+        return measures

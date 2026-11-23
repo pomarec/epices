@@ -15,3 +15,9 @@ uv run python manage.py createsuperuser
 ```sh
 uv run python manage.py runserver
 ```
+
+# Run tests :
+
+```sh
+uv run python manage.py test
+```

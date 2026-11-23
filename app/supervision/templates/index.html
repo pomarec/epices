@@ -1,12 +1,20 @@
 <html>
   <head>
     <script>
+      // Update measures diplayed based on selected date
       function onDateSelected(event) {
         let date = event.target.value
         let params = new URLSearchParams(window.location.search);
         params.set('date', date);
         window.location.search = params;
       }
+
+      document.addEventListener("DOMContentLoaded", function() {
+        // Click on upload button shows the upload page
+        document.querySelectorAll(".measures-upload").forEach((e) => e.addEventListener("click", () => {
+          window.location = "/upload";
+        }));
+      });
     </script>
   </head>
   <body>

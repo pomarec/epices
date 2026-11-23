@@ -1,7 +1,10 @@
 from datetime import datetime
 
-from django.http import HttpResponse
+from django import forms
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+
+from app.supervision.serialiazers import MeasureSerializer
 
 from .models import Measure
 
@@ -27,3 +30,22 @@ def index(request):
         context["energy_sum"] = energy_sum
 
     return render(request, "index.html", context)
+
+
+def upload(request):
+    """
+    Upload measures in a file.
+    """
+
+    class UploadMeasureFileForm(forms.Form):
+        file = forms.FileField()
+
+    if request.method == "POST":
+        form = UploadMeasureFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            measures = MeasureSerializer().fromFile(request.FILES["file"])
+            print(measures)
+            return HttpResponseRedirect("/")
+    else:
+        form = UploadMeasureFileForm()
+    return render(request, "upload.html", {"form": form})

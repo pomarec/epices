@@ -1,0 +1,16 @@
+<html>
+  <head>
+    <script></script>
+  </head>
+  <body>
+    Envoyez un fichier de donées de production d'énergies :<br />
+    Assurez-vous que le fichier soit un csv avec les colonnes : identifiant de
+    l'onduleur (ex: "1"), date et heure (ex: "11/07/25 01:00"), valeur (ex:
+    "2301)
+    <!--<input type="file" id="file" />-->
+    <form enctype="multipart/form-data" action="/upload" method="post">
+      {% csrf_token %} {{ form }}
+      <input type="submit" value="Submit" />
+    </form>
+  </body>
+</html>

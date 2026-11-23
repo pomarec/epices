@@ -4,6 +4,7 @@ from django import forms
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
+from app.supervision.ingesters import MeasureIngester
 from app.supervision.serialiazers import MeasureSerializer
 
 from .models import Measure
@@ -43,7 +44,7 @@ def upload(request):
         form = UploadMeasureFileForm(request.POST, request.FILES)
         if form.is_valid():
             measures = MeasureSerializer().fromFile(request.FILES["file"])
-            print(measures)
+            MeasureIngester().ingest(measures)
             return HttpResponseRedirect("/")
     else:
         form = UploadMeasureFileForm()
